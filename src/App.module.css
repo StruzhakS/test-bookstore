@@ -1,0 +1,49 @@
+.booksList {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 20px;
+  padding: 20px;
+}
+
+.likstItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100% / 5);
+  padding: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  cursor: pointer;
+}
+
+.addBtn {
+  display: block;
+  margin: 0 auto;
+  position: fixed;
+  top: 20px;
+  left: calc(100% / 2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.changeBook {
+  width: 400px;
+  height: 600px;
+}
+
+.textarea {
+  width: 100%;
+  resize: none;
+}
+
+.changeTitle {
+  color: red;
+  text-align: center;
+}
+
+.changeInput {
+  width: 100%;
+}
