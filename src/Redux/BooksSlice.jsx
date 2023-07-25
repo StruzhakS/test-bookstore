@@ -4,9 +4,6 @@ const booksSlice = createSlice({
   name: 'books',
   initialState: {
     items: books,
-    // filter: 'all',
-    isLoading: false,
-    error: null,
   },
   reducers: {
     addBook: (state, { payload }) => {
@@ -17,7 +14,6 @@ const booksSlice = createSlice({
     },
     changeBookAction: (state, { payload }) => {
       const finIndexChangesBook = state.items.findIndex(el => el.id === payload.id);
-      console.log(finIndexChangesBook);
       state.items[finIndexChangesBook] = payload;
     },
   },

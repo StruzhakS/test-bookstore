@@ -8,6 +8,7 @@
 
 .likstItem {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   width: calc(100% / 5);
@@ -22,6 +23,7 @@
   position: fixed;
   top: 20px;
   left: calc(100% / 2);
+  z-index: 1;
 }
 
 .form {
@@ -46,4 +48,59 @@
 
 .changeInput {
   width: 100%;
+}
+
+.changeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+.changeBtn {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  border-color: transparent;
+  background-color: transparent;
+}
+.changeBtn:hover {
+  scale: 1.1;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  border-color: transparent;
+  background-color: transparent;
+}
+.closeBtn:hover {
+  scale: 1.1;
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 40px;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  border-color: transparent;
+  background-color: transparent;
+  opacity: 0.3;
+}
+.deleteBtn:hover {
+  scale: 1.1;
+  opacity: 1;
 }

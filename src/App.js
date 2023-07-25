@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addBook, changeBookAction, deleteBook } from './Redux/BooksSlice';
 import Modal from 'react-modal';
 import { useState } from 'react';
+import { AiFillEdit } from 'react-icons/ai';
+import { GrClose } from 'react-icons/gr';
+import { MdDeleteForever } from 'react-icons/md';
 
 Modal.setAppElement('#root');
 
@@ -74,7 +77,11 @@ function App() {
   };
 
   const openChange = e => {
-    if (e.target.localName === 'button') {
+    if (
+      e.target.localName === 'button' ||
+      e.target.localName === 'path' ||
+      e.target.localName === 'svg'
+    ) {
       return;
     }
     const id = e.currentTarget.id;
@@ -91,47 +98,62 @@ function App() {
   let titleIsEdit;
   if (titleEdit) {
     titleIsEdit = (
-      <>
+      <div className={s.changeBox}>
         <input
           value={changeTitle}
           onChange={e => setChangeTitle(e.target.value)}
-          onBlur={() => setTitleEdit(false)}
           className={s.changeInput}
         />
         <button onClick={() => setTitleEdit(false)}>Змінити</button>
-      </>
+      </div>
     );
   } else {
-    titleIsEdit = <h2 onClick={() => setTitleEdit(true)}>{changeTitle}</h2>;
+    titleIsEdit = (
+      <div className={s.changeBox}>
+        <h2>{changeTitle}</h2>
+        <button onClick={() => setTitleEdit(true)} className={s.changeBtn}>
+          {AiFillEdit()}
+        </button>
+      </div>
+    );
   }
 
   let priceIsEdit;
   if (priceEdit) {
     priceIsEdit = (
-      <>
+      <div className={s.changeBox}>
         <input
           type="number"
           value={changePrice}
-          onChange={e => setChangePrice(e.target.value)}
-          onBlur={() => setPriceEdit(false)}
+          onChange={e =>
+            e.target.value < 0
+              ? window.alert('Ціна за книгу має бути числом більше за 0')
+              : setChangePrice(e.target.value)
+          }
           className={s.changeInput}
         />
         <button onClick={() => setPriceEdit(false)}>Змінити</button>
-      </>
+      </div>
     );
   } else {
-    priceIsEdit = <p onClick={() => setPriceEdit(true)}>{changePrice} грн</p>;
+    priceIsEdit = (
+      <div className={s.changeBox}>
+        <p>{changePrice} грн</p>
+        <button onClick={() => setPriceEdit(true)} className={s.changeBtn}>
+          {AiFillEdit()}
+        </button>
+      </div>
+    );
   }
 
   let categoryIsEdit;
   if (categoryEdit) {
     categoryIsEdit = (
-      <>
+      <div className={s.changeBox}>
         <select
           name="category"
           id="category"
           value={changeCategory}
-          onBlur={() => setCategoryEdit(false)}
           onChange={e => setChangeCategory(e.target.value)}
         >
           <option value="Фентезі">Фентезі</option>
@@ -142,32 +164,50 @@ function App() {
           <option value="Триллер">Триллер</option>
         </select>
         <button onClick={() => setCategoryEdit(false)}>Змінити</button>
-      </>
+      </div>
     );
   } else {
-    categoryIsEdit = <p onClick={() => setCategoryEdit(true)}>{changeCategory}</p>;
+    categoryIsEdit = (
+      <div className={s.changeBox}>
+        <p>{changeCategory}</p>
+        <button onClick={() => setCategoryEdit(true)} className={s.changeBtn}>
+          {AiFillEdit()}
+        </button>
+      </div>
+    );
   }
 
   let descriptionIsEdit;
   if (descriptionEdit) {
     descriptionIsEdit = (
-      <>
+      <div className={s.changeBox}>
         <textarea
           className={s.textarea}
           value={changeDescription}
           onChange={e => setChangeDescription(e.target.value)}
           rows={10}
-          onBlur={() => setDescriptionEdit(false)}
         />
         <button onClick={() => setDescriptionEdit(false)}>Змінити</button>
-      </>
+      </div>
     );
   } else {
-    descriptionIsEdit = <p onClick={() => setDescriptionEdit(true)}>{changeDescription}</p>;
+    descriptionIsEdit = (
+      <div className={s.changeBox}>
+        <p>{changeDescription}</p>
+        <button onClick={() => setDescriptionEdit(true)} className={s.changeBtn}>
+          {AiFillEdit()}
+        </button>
+      </div>
+    );
   }
   return (
     <>
-      <button type="button" className={s.addBtn} onClick={openModal}>
+      <button
+        type="button"
+        className={s.addBtn}
+        onClick={openModal}
+        disabled={modalIsOpen || changeModalIsOpen ? true : false}
+      >
         Добавити книгу
       </button>
       <ul className={s.booksList}>
@@ -179,8 +219,12 @@ function App() {
             <p>
               {el.description.length > 20 ? el.description.slice(0, 200) + `...` : el.description}
             </p>
-            <button type="button" onClick={() => dispatch(deleteBook(el.id))}>
-              Видалити книгу
+            <button
+              type="button"
+              onClick={() => dispatch(deleteBook(el.id))}
+              className={s.deleteBtn}
+            >
+              {MdDeleteForever()}
             </button>
           </li>
         ))}
@@ -192,7 +236,9 @@ function App() {
         contentLabel="Example Modal"
       >
         <h2>Добавити книгу</h2>
-        <button onClick={closeModal}>close</button>
+        <button onClick={closeModal} className={s.closeBtn}>
+          {GrClose()}
+        </button>
         <form className={s.form}>
           <label htmlFor="title">Назва книги: </label>
           <input
@@ -247,7 +293,9 @@ function App() {
       >
         {changeBook && (
           <div className={s.changeBook}>
-            <button onClick={closeChangeModal}>close</button>
+            <button onClick={closeChangeModal} className={s.closeBtn}>
+              {GrClose()}
+            </button>
             <h2 className={s.changeTitle}>Змінити поля книги</h2>
             {titleIsEdit}
             {priceIsEdit}
